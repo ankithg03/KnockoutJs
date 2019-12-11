@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    id:<span id="id" data-bind="text:koVariableId"></span>
+    <select name="ids" id="ids" data-bind="options:AccountIds,optionsText:'Name',optionsValue:'id'"></select>
+    <hr>
+    <br>
+
+    <br> New Id : <input type="text" name="new id" id="newid" data-bind="value:koVariableId">
+    <br> New Name : <input type="text" name="new name" id="newName" data-bind="value:koVariableName">
+
+    <input type="button" id="add" value="add">
+    <span id="sum"></span>
+    <script>
+        $("#add").click(function() {
+            var acc = new modelObject(accModel.koVariableId(), accModel.koVariableName());
+            //wrong method ----> viewModel.AccountIds.push(acc);
+            accModel.AccountIds.push(acc);
+            /**
+             * ObservableArray Operations
+             * push(value)— Adds a new item to the end of array.
+             * pop()— Removes the last value from the array and returns it.
+             * unshift(value)— Inserts a new item at the beginning of the array.
+             * shift()— Removes the first value from the array and returns it.
+             * reverse()— Reverses the order of the array and returns the observableArray(not the underlying array).
+             * sort()— Sorts the array contents and returns the observableArray.The
+             * default sort is alphabetical, but you can optionally pass a
+             * function to control how the array should be sorted.See the example under sorted below.
+             * splice()— Removes and returns a given number of elements starting from a given index.For example, myObservableArray.splice(1, 3) removes three elements starting from index position 1(i.e., the 2 nd, 3 rd, and 4 th elements) and returns them as an array.
+             */
+            // $("#sum")[0].innerText += Number(accModel.koVariableId());
+        });
+
+        function modelObject(id, Name) {
+            this.id = id;
+            this.Name = Name;
+        }
+
+        function viewModel(acc) {
+            this.koVariableId = ko.observable(acc.id);
+            this.koVariableName = ko.observable(acc.Name);
+            var a1 = new modelObject("1", "A1");
+            var a2 = new modelObject("2", "A2");
+            var a3 = new modelObject("3", "A3");
+            this.AccountIds = ko.observableArray([a1, a2, a3]);
+
+        }
+
+        var acc = new modelObject("4", "sandesh");
+        var accModel = new viewModel(acc);
+        accModel.koVariableId.extend({
+            rateLimit: 500
+        });
+        ko.applyBindings(accModel)
+    </script>
+
+</html>

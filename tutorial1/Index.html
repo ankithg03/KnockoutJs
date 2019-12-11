@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Sample</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+    <style>
+        .red {
+            color: red;
+        }
+        
+        .blue {
+            color: blue;
+        }
+        
+        .black {
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <label for="userName">user name:</label>
+    <input type="text" name="userName" id="userName" value="asdas" data-bind="value:sampleknockoutVariable"> Entered Color is
+    <br>
+    <span data-bind="text:koVariableForColor, class:koVariableForColor">
+color
+    </span>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.5.0/knockout-min.js"></script>
+    <script>
+        var myViewModel = function(firstName) {
+            // firstName = ko.observable("Ankith")
+            this.sampleknockoutVariable = ko.observable(firstName);
+            this.koVariableForColor = ko.computed(function() {
+                return this.sampleknockoutVariable();
+            }, this);
+
+        };
+        // ko.applyBinding(myModel);
+        ko.applyBindings(new myViewModel("red"));
+    </script>
+</body>
+
+</html>
